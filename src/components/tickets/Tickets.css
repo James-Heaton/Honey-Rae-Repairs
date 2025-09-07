@@ -47,13 +47,18 @@
 }
 
 .ticket-search {
-    padding: 0.375rem 0.75rem;
-    font-size: 1rem;
-    border: 1px solid var(--outline);
-    border-radius: 0.25rem;
-    margin-left: auto;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  border: 1px solid var(--outline);
+  border-radius: 0.25rem;
+  margin-left: auto;
 }
 
 .filter-bar {
-    display: flex;
+  display: flex;
+}
+
+.btn-container {
+  display: flex;
+  justify-content: flex-end;
 }
