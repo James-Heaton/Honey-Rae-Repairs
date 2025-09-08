@@ -43,19 +43,16 @@ export const TicketList = ({ currentUser }) => {
         (ticket) => ticket.emergency === true
       );
       setFilteredTickets(emergencyTickets);
-
     } else if (filterType === "nonEmergency") {
       const nonEmergencyTickets = allTickets.filter(
         (ticket) => ticket.emergency === false
       );
       setFilteredTickets(nonEmergencyTickets);
-
     } else if (filterType === "openForUser") {
       const openForUserTickets = allTickets.filter(
         (ticket) => ticket.dateCompleted === ""
       );
       setFilteredTickets(openForUserTickets);
-      
     } else {
       setFilteredTickets(allTickets);
     }

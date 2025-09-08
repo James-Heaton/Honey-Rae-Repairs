@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
 import { getAllEmployees } from "../../services/employeeService";
-import { assignTicket, updateTicket, deleteTicket } from "../../services/ticketService";
+import {
+  assignTicket,
+  updateTicket,
+  deleteTicket,
+} from "../../services/ticketService";
 
 export const Ticket = ({ ticket, currentUser, getAndSetTickets }) => {
   const [employees, setEmployees] = useState([]);
@@ -49,7 +53,6 @@ export const Ticket = ({ ticket, currentUser, getAndSetTickets }) => {
   };
 
   const handleDelete = () => {
-
     deleteTicket(ticket.id).then(() => {
       getAndSetTickets();
     });
