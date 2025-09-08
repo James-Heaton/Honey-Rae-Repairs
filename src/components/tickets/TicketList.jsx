@@ -12,15 +12,19 @@ export const TicketList = ({ currentUser }) => {
 
   const getAndSetTickets = () => {
     getAllTickets().then((ticketsArray) => {
-      setAllTickets(ticketsArray);
+      currentUser.isStaff
+        ? setAllTickets(ticketsArray)
+        : setAllTickets(
+            ticketsArray.filter((ticket) => ticket.userId === currentUser.id)
+          );
     });
-  }
+  };
 
   // useEffect takes 2 arguments: a function & an array (dependency array)
   useEffect(() => {
-    getAndSetTickets()
-  }, []); 
-  
+    getAndSetTickets();
+  }, [currentUser]);
+
   // the function is what we want to happen // the array is when it will happen // empty array only runs on initial render of component
 
   // useEffect(() => {
@@ -39,11 +43,19 @@ export const TicketList = ({ currentUser }) => {
         (ticket) => ticket.emergency === true
       );
       setFilteredTickets(emergencyTickets);
+
     } else if (filterType === "nonEmergency") {
       const nonEmergencyTickets = allTickets.filter(
         (ticket) => ticket.emergency === false
       );
       setFilteredTickets(nonEmergencyTickets);
+
+    } else if (filterType === "openForUser") {
+      const openForUserTickets = allTickets.filter(
+        (ticket) => ticket.dateCompleted === ""
+      );
+      setFilteredTickets(openForUserTickets);
+      
     } else {
       setFilteredTickets(allTickets);
     }
@@ -60,10 +72,21 @@ export const TicketList = ({ currentUser }) => {
     <>
       <div className="tickets-container">
         <h2>Tickets</h2>
-        <FilterBar setFilterType={setFilterType} setSearchTerm={setSearchTerm}/>
+        <FilterBar
+          setFilterType={setFilterType}
+          setSearchTerm={setSearchTerm}
+          currentUser={currentUser}
+        />
         <article className="tickets">
           {filteredTickets.map((ticketObj) => {
-            return <Ticket ticket={ticketObj} currentUser={currentUser} getAndSetTickets={getAndSetTickets} key={ticketObj.id} />;
+            return (
+              <Ticket
+                ticket={ticketObj}
+                currentUser={currentUser}
+                getAndSetTickets={getAndSetTickets}
+                key={ticketObj.id}
+              />
+            );
           })}
         </article>
       </div>
